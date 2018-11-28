@@ -6,7 +6,7 @@
 	<style type="text/css">
 		/* Move down content because we have a fixed navbar that is 3.5rem tall */
 		body {
-		  padding-top: 5rem;
+		  padding-top: 3.5rem;
 		}
 	</style>
 </head>
@@ -16,34 +16,13 @@
 
 	<main role="main">
 
-		<div class="container">
-			<% if flash[:success] %>
-				<div class="alert alert-success alert-dismissible fade show" role="alert">
-				  <%= flash[:success] %>
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				  </button>
-				</div>
-			<% end %>
-
-			<% if flash[:error] %>
-				<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				  <%= flash[:error] %>
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				  </button>
-				</div>
-			<% end %>
-
-		</div>
-
 		<%= yield %>
 
 	</main>
 
 
     <footer class="container">
-      <p>&copy; PDFNinja, LLC 2017-2018</p>
+      <p>&copy; Company 2017-2018</p>
     </footer>
 
 

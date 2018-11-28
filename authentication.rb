@@ -3,8 +3,6 @@ require_relative "user.rb"
 
 enable :sessions
 
-set :session_secret, 'super secret'
-
 get "/login" do
 	erb :"authentication/login"
 end
@@ -38,14 +36,18 @@ post "/register" do
 	email = params[:email]
 	password = params[:password]
 
-	u = User.new
-	u.email = email.downcase
-	u.password =  password
-	u.save
+	if email && password && User.first(email: email.downcase).nil?
+		u = User.new
+		u.email = email.downcase
+		u.password =  password
+		u.save
 
-	session[:user_id] = u.id
+		session[:user_id] = u.id
 
-	erb :"authentication/successful_signup"
+		erb :"authentication/successful_signup"
+	else
+		erb :"authentication/failed_signup"
+	end
 
 end
 
@@ -63,7 +65,7 @@ end
 #if the user is not signed in, will redirect to login page
 def authenticate!
 	if !current_user
-		flash[:error] = "Error: Please sign-in before continuing."
 		redirect "/login"
 	end
 end
+
