@@ -31,18 +31,58 @@ get "/sign_up" do
 	erb :"authentication/sign_up"
 end
 
+get "/sign_up_student" do
+	erb :"authentication/sign_up_student"
+end
 
-post "/register" do
+get "/sign_up_tutor" do
+	erb :"authentication/sign_up_tutor"
+end
+
+post "/register_student" do
+
+	first_name = params[:first_name]
+	last_name = params[:last_name]
 	email = params[:email]
 	password = params[:password]
 
 	if email && password && User.first(email: email.downcase).nil?
-		u = User.new
-		u.email = email.downcase
-		u.password =  password
-		u.save
+		s = User.new
+		s.first_name = first_name.capitalize
+		s.last_name = last_name.capitalize
+		s.email = email.downcase
+		s.password =  password
+		s.student = true
+		s.save
 
-		session[:user_id] = u.id
+		session[:user_id] = s.id
+
+		erb :"authentication/successful_signup"
+	else
+		erb :"authentication/failed_signup"
+	end
+
+end
+
+post "/register_tutor" do
+
+	first_name = params[:first_name]
+	last_name = params[:last_name]
+	email = params[:email]
+	password = params[:password]
+	description = params[:description]
+
+	if email && password && User.first(email: email.downcase).nil?
+		t = User.new
+		t.first_name = first_name.capitalize
+		t.last_name = last_name.capitalize
+		t.email = email.downcase
+		t.description = description
+		t.password =  password
+		t.tutor = true
+		t.save
+
+		session[:user_id] = t.id
 
 		erb :"authentication/successful_signup"
 	else

@@ -31,11 +31,14 @@ User.auto_upgrade!
 Video.auto_upgrade!
 
 #make an admin user if one doesn't exist!
-if User.all(administrator: true).count == 0
+if User.all(tutor: true).count == 0
 	u = User.new
-	u.email = "admin@admin.com"
-	u.password = "admin"
-	u.administrator = true
+	u.first_name = "Tutor"
+	u.last_name = "Rotut"
+	u.email = "tutor@tutor.com"
+	u.description = "I can teach you ruby!"
+	u.password = "tutor"
+	u.tutor = true
 	u.save
 end
 
@@ -109,6 +112,21 @@ get "/videos/new" do
 	end
 end
 
+###########################################################################################################
+
+get "/tutor_list" do
+	@tutor_list = User.all(tutor: true)
+	erb :tutor_list
+end
+
+get "/tutor_profile" do
+	erb :tutor_profile
+	
+end
+
+
+
+############################################################################################################
 require 'stripe'
 
 set :publishable_key, 'pk_test_OeiFF0y42AzooJNLxo5mjwsg'

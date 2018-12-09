@@ -1,0 +1,11 @@
+<ul class="list-group">
+  <li class="list-group-item">
+  <a href="#" class="list-group-item list-group-item-action active">
+  	<% @tutor_list.each do |u| %>
+			<h4><%= u.first_name %></h4>
+			<h4><%= u.last_name %></h4>
+			<p><%= u.description %></p>
+		<% end %>
+	</a>
+  </li>
+</ul
