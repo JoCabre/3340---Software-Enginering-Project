@@ -41,7 +41,7 @@ padding:0px;
 				  			<% end %>
                         </h6>
 
-						<p class="text-right m-0"><a href="/tutor_list" class="btn btn-primary" data-toggle="modal" data-target=#<%= u.id %>><i class="far fa-user"></i> View Profile</a> <a href="/upgrade"><button type="button" class="btn btn-primary">HIRE</button></a></p>
+						<p class="text-right m-0"><a href="/tutor_list" class="btn btn-primary" data-toggle="modal" data-target=#<%= u.id %>><i class="far fa-user"></i> View Profile</a></p>
 
 						<!-- Modal -->
 							<div class="modal fade bd-example-modal-lg" id=<%= u.id %> tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -84,16 +84,14 @@ padding:0px;
 
 				  					<p>
 				  					<h6 class="text-info">Contact Information: </h6>
-				  					<h7><span class="badge badge-danger">HIRE TO UNLOCK!</span></h7>
+				  					<h7><span class="badge badge-info"><%= u.email %></span></h7>
 				  					</p>
 
 							      	</div>
 							      	</div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							        <a href="/upgrade">
-							        <button type="button" class="btn btn-primary">HIRE</button>
-							    	</a>
+							        
 							      </div>
 							    </div>
 							  </div>
@@ -101,7 +99,7 @@ padding:0px;
 				</div>
 			</div>
 		</div>
-</div>
+	</div>
 </div>
 </section>
 <% end %>

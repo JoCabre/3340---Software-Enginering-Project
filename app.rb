@@ -15,43 +15,33 @@ else
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/app.db")
 end
 
-class Video
-	include DataMapper::Resource
-
-	property :id, Serial
-	property :title, Text
-	property :description, Text
-	property :video_url, Text
-	property :pro, Boolean, :default => false
-	#fill in the rest
-end
 
 DataMapper.finalize
 User.auto_upgrade!
-Video.auto_upgrade!
 
 #make an admin user if one doesn't exist!
 if User.all(tutor: true).count == 0
 	u = User.new
 	u.first_name = "Tutor"
 	u.last_name = "Rotut"
+	u.city = "Coolest City"
+	u.state = "CO"
 	u.email = "tutor@tutor.com"
 	u.description = "I can teach you ruby!"
+	u.tag1 = "Ruby"
+	u.tag2 = "HTML"
+	u.tag3 = "CSS"
 	u.password = "tutor"
 	u.tutor = true
 	u.save
 end
 
-def youtube_embed(youtube_url)
-  if youtube_url[/youtu\.be\/([^\?]*)/]
-    youtube_id = $1
-  else
-    # Regex from # http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url/4811367#4811367
-    youtube_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
-    youtube_id = $5
-  end
-
-  %Q{<iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/#{ youtube_id }" frameborder="0" allowfullscreen></iframe>}
+if User.all(administrator: true).count == 0
+	u = User.new
+	u.email = "admin@admin.com"
+	u.password = "admin"
+	u.administrator = true
+	u.save
 end
 
 #the following urls are included in authentication.rb
@@ -67,66 +57,20 @@ get "/" do
 	erb :index
 end
 
-get "/videos" do
+get "/tutor_list" do
 	authenticate!
 
 	if current_user.administrator == false && current_user.pro == false
-		@videos = Video.all(pro: false)
-		erb :videos		
+		@tutor_list = User.all(tutor: true)
+		erb :tutor_list	
 	else
-		@videos = Video.all
-		erb :videos
-	end
-
-end
-
-post "/videos/create" do
-	authenticate!
-
-	if current_user.administrator == true
-		if params["title"] && params["video_url"] && params["description"]
-			v = Video.new
-			v.title = params["title"]
-			v.description = params["description"]
-			v.video_url = params["video_url"]
-
-			if params["pro"]
-				if params["pro"] == "on"
-					v.pro = true
-				end
-			end
-			v.save
-		end
-	else
-		redirect "/"
+		authenticate!
+		@tutor_list = User.all(tutor: true)
+		erb :tutor_list_pro
 	end
 end
 
-get "/videos/new" do
-	authenticate!
 
-	if current_user.administrator == true
-		erb :new_videos
-	else
-		redirect "/"
-	end
-end
-
-###########################################################################################################
-
-get "/tutor_list" do
-	@tutor_list = User.all(tutor: true)
-	erb :tutor_list
-end
-
-get "/tutor_profile" do
-	erb :tutor_profile
-	
-end
-
-
-
-############################################################################################################
 require 'stripe'
 
 set :publishable_key, 'pk_test_OeiFF0y42AzooJNLxo5mjwsg'

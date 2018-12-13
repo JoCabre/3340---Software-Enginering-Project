@@ -13,6 +13,11 @@ class User
     property :student, Boolean, :default => false
     property :tutor, Boolean, :default => false
     property :description, Text
+    property :tag1, Text
+    property :tag2, Text
+    property :tag3, Text
+    property :city, String
+    property :state, String
 
     def login(password)
         return self.password == password

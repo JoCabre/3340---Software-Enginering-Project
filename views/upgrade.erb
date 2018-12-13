@@ -1,14 +1,27 @@
-@@ upgrade
+<style>
+.container {
+
+
+text-align: center;
+padding: 100px;
+}
+
+</style>
+
+
+<div class="container">
   <form action="/charge" method="post" class="payment">
     <article>
       <label class="amount">
-        <span>Amount: $5.00</span>
+        <span>Amount: $50.00</span>
       </label>
     </article>
 
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= settings.publishable_key %>"
             data-description="A month's subscription"
-            data-amount="500"
+            data-amount="5000"
             data-locale="auto"></script>
-  </form>
+  
+  </div>
+            </form>

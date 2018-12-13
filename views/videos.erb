@@ -1,7 +1,0 @@
-<div class="container">
-	<% @videos. each do |v| %>
-		<h2><%= v.title %></h2>
-		<p><%= v.description %></p>
-		<p><%= youtube_embed(v.video_url) %></p>
-	<% end %>
-</div>

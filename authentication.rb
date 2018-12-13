@@ -31,6 +31,7 @@ get "/sign_up" do
 	erb :"authentication/sign_up"
 end
 
+
 get "/sign_up_student" do
 	erb :"authentication/sign_up_student"
 end
@@ -71,6 +72,11 @@ post "/register_tutor" do
 	email = params[:email]
 	password = params[:password]
 	description = params[:description]
+	tag1 = params[:tag1]
+	tag2 = params[:tag2]
+	tag3 = params[:tag3]
+	city = params[:city]
+	state = params[:state]
 
 	if email && password && User.first(email: email.downcase).nil?
 		t = User.new
@@ -78,7 +84,12 @@ post "/register_tutor" do
 		t.last_name = last_name.capitalize
 		t.email = email.downcase
 		t.description = description
+		t.tag1 = tag1
+		t.tag2 = tag2
+		t.tag3 = tag3
 		t.password =  password
+		t.city = city
+		t.state = state
 		t.tutor = true
 		t.save
 
